@@ -1,6 +1,9 @@
 # Why use it? 
 Use Case: As a Customer concerned about updating Cloudhub Patches every month I want to get a list of all CloudhubAPIs MRT version with their (Major.Minor.Patch, including Patch Date) in a Dashboard so that I can make decisions and understand if we are GOOD to go, even before the Mandatory Patches are "automatically applied"
 
+# FIVE (5) Minutes Video 
+<------->
+
 # What is it? listing-all-apis-versions
 Three componentes: 
 1. A MuleSoft App to list all Cloudhub APIs for an environment and aggregate the PatchDate, then produces a CSV. You need to add your own Credentials to the Property file
