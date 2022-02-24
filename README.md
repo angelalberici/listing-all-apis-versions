@@ -21,7 +21,7 @@ Three componentes:
 # How to use it 
 1. Download and import the Jar file into Anypoint Studio. Add your own client_id/client_secret in the properties 
 2. Download and import the Postman Collection. Add your own OrganizationID and EnvironmentID in the HTTP Headers. Copy the CSV response 
-3. Get a freash copy of ![the public GoogleSheet](https://docs.google.com/spreadsheets/d/e/2PACX-1vSjQKjV5Dg8ARWnRWGoAFWtND54imxrefS52oWJxOIYs9QjdfmbDl4RAbxx_DPENgzzHlEzLVfIZUMn/pubhtml). Go to Data tab, paste the CSV and use the "Split Text to Columns" (whch splits by Comma)
+3. Get a fresh copy of ![the public GoogleSheet](https://docs.google.com/spreadsheets/d/e/2PACX-1vSjQKjV5Dg8ARWnRWGoAFWtND54imxrefS52oWJxOIYs9QjdfmbDl4RAbxx_DPENgzzHlEzLVfIZUMn/pubhtml) . Go to Data tab, paste the CSV and use the "Split Text to Columns" (whch splits by Comma)
 4. Done. Check your Dashboards view, enjoy! 
 
 # More Context 
