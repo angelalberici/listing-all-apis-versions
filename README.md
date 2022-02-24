@@ -4,8 +4,13 @@ Use Case: As a Customer concerned about updating Cloudhub Patches every month I 
 # What is it? listing-all-apis-versions
 Three componentes: 
 1. A MuleSoft App to list all Cloudhub APIs for an environment and aggregate the PatchDate, then produces a CSV. You need to add your own Credentials to the Property file
+![](img/listing-all-apis-versions/blob/main/img/MuleApp-Flow.png)
+
 2. Postman Collection to call that MuleApp. You need to add your own Auth Headers (OrgID and EnvID). This returns the CSV
+![]()
+
 3. GoogleSpreadsheet Dashboard, where you paste the CSV and you go to the Dashboards tab to visualize all your APIs patch dates 
+![](img/listing-all-apis-versions/blob/main/img/DashboardSpreadsheet.png?raw=true)
 
 
 # More Context 
