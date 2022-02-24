@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="dd14b549-8f73-4b58-9f21-2c62418863c0" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTPS_Request_configuration" doc:name="HTTP Request configuration" doc:id="fe971d45-877c-4562-9947-fa5bdea6ec9b" enableCookies="false">
+		<http:request-connection host="anypoint.mulesoft.com" protocol="HTTPS"/>
+	</http:request-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="1bb0981c-9495-413d-a9bc-0f75732b43b5" file="${env}-properties.yaml" />
+	<global-property doc:name="Global Property" doc:id="2d40b787-f570-443f-8c38-f72fec03e3de" name="env" value="dev" />
+	<flow name="listing-all-apis-versionsFlow" doc:id="6e2d8997-3ce4-48dc-ae6e-c6e261ddbded" >
+		<http:listener doc:name="Listener" doc:id="e5a3c87e-0e86-4086-963e-bcd19169aa58" config-ref="HTTP_Listener_config" path="/"/>
+		<ee:transform doc:name="environmentId var" doc:id="047481f7-6168-4de4-b16f-054362778ed3" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="environmentId" ><![CDATA[%dw 2.0
+output application/java
+---
+if ( attributes.headers['X-ANYPNT-ENV-ID'] !=null) (attributes.headers['X-ANYPNT-ENV-ID']) else ( p('anypoint.X-ANYPNT-ENV-ID') )]]></ee:set-variable>
+				<ee:set-variable variableName="orgId" ><![CDATA[%dw 2.0
+output application/java
+---
+if ( attributes.headers['X-ANYPNT-ORG-ID'] !=null) (attributes.headers['X-ANYPNT-ORG-ID']) else ( p('X-ANYPNT-ORG-ID') )]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<choice doc:name="Is ConnectedApp? Property has Client_Id and Client_Secret " doc:id="8711c365-69ce-471b-ad84-40219f9872b0" >
+			<when expression="#[(p('anypoint.client_id') != null)]">
+				<http:request method="POST" doc:name="Get Token by ConnectedApp" doc:id="ec7d6ad2-a929-4e5b-b306-7861b7378c6f" config-ref="HTTPS_Request_configuration" path="/accounts/api/v2/oauth2/token" sendCorrelationId="AUTO">
+			<http:body><![CDATA[#[%dw 2.0
+output application/json
+
+---
+{
+client_id: p('anypoint.client_id'),
+client_secret: p('anypoint.client_secret'),
+grant_type: p('anypoint.grant_type')
+}]]]></http:body>
+		</http:request>
+			</when>
+			<otherwise >
+				<http:request method="POST" doc:name="Get Token by Username/Password" doc:id="0aed480f-f2f4-4b8a-a1d3-7ace679b6357" config-ref="HTTPS_Request_configuration" path="/accounts/login" sendCorrelationId="AUTO">
+			<http:body><![CDATA[#[%dw 2.0
+output application/x-www-form-urlencoded
+
+---
+{
+username: p('anypoint.username'),
+password: p('anypoint.password')
+}
+
+/*
+client_id: p('anypoint.client_id'),
+client_secret: p('anypoint.client_secret'),
+grant_type: p('anypoint.grant_type')
+ * 
+ */]]]></http:body>
+		</http:request>
+			</otherwise>
+		</choice>
+		<ee:transform doc:name="var token" doc:id="a4e40572-6f0a-4f47-9870-df9c8c02d3ab" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="access_token" ><![CDATA[%dw 2.0
+output application/java
+---
+(payload.token_type ++ " " ++ payload.access_token) as String]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<http:request method="GET" doc:name="Get all APIs in envrionment" doc:id="0557ce40-0371-4185-99dd-138fe484b708" config-ref="HTTPS_Request_configuration" path="/cloudhub/api/v2/applications" sendCorrelationId="AUTO" >
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	Authorization : vars.access_token,
+	"X-ANYPNT-ENV-ID" : vars.environmentId,
+	"X-ANYPNT-ORG-ID" : vars.orgId
+}]]]></http:headers>
+		</http:request>
+		<ee:transform doc:name="Json Payload and two auxiliary vars" doc:id="55345e89-6e7c-4348-8cd8-012c051338e2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="allAPIS" ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<foreach doc:name="For Each" doc:id="5668cd44-4252-4024-ab2f-6410506312bf" collection="payload">
+			<ee:transform doc:name="vars cloudhubAPI,muleVersion,patchId" doc:id="243d30f2-a738-4a60-a3e1-4ef7024804c0" >
+				<ee:message >
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="muleVersion" ><![CDATA[%dw 2.0
+output application/java
+---
+payload["muleVersion"]["version"]]]></ee:set-variable>
+					<ee:set-variable variableName="patchId" ><![CDATA[%dw 2.0
+output application/java
+---
+payload["muleVersion"]["updateId"]]]></ee:set-variable>
+					<ee:set-variable variableName="cloudhubAPI" ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<try doc:name="Try" doc:id="07a1fd74-4575-44cd-9c4e-661375b4a733" >
+				<http:request method="GET" doc:name="Get UpdateName from updateId" doc:id="5354ea31-45a2-4ef9-90d5-782b8128ac23" config-ref="HTTPS_Request_configuration" path='#["/cloudhub/api/mule-versions/" ++ vars.muleVersion ++ "/updates/" ++ vars.patchId]' sendCorrelationId="AUTO">
+				<http:headers><![CDATA[#[output application/java
+---
+{
+	Authorization : vars.access_token,
+	"X-ANYPNT-ENV-ID" : vars.environmentId,
+	"X-ANYPNT-ORG-ID" : vars.orgId
+}]]]></http:headers>
+			</http:request>
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="30d71d01-39a3-43b7-8be7-6010ac40c88a" >
+						<logger level="INFO" doc:name="Logger" doc:id="e5444c91-3081-44c9-9ac0-9b511fcbf463" message='This exception may have been caused by an API Gateway API. API Gateway APIs cannot be found using the UpdateID, the HTTP Request does not retrieve the API Gateway patch details'/>
+					</on-error-continue>
+				</error-handler>
+			</try>
+			<ee:transform doc:name="Aggregate PatchDate to CloudhubAPI" doc:id="3a5f51c7-d4e9-4cc5-b258-e0b0232fc6c2">
+				<ee:message />
+				<ee:variables>
+					<ee:set-variable variableName="allAPIS"><![CDATA[%dw 2.0
+output application/java
+import mergeWith from dw::core::Objects
+var angelTest = 		{"patchName" : "angelTestangelTestangelTestangelTestangelTestangelTestangelTestangelTestangelTest"}
+var patchName = 			if(payload.name != null ) (payload.name) else ""
+var muleRTVersion = 		{"muleVersion" : vars.muleVersion}
+var patchReleaseDate = 	if(payload.releaseDate != null ) {"patchReleaseDate" : (payload.releaseDate as DateTime {unit : "milliseconds"})} else ""
+var indexForEach = 		(itemSequenceInfo.position as Number)
+---
+vars.AllAPIS map ((oneAPI) ->
+    oneAPI update {
+        case muleVersion at .muleVersion.version if( oneAPI.domain == vars.cloudhubAPI.domain ) -> (oneAPI.muleVersion.version ++ "/" ++ patchName as String)
+    }
+)
+
+//vars.AllAPIS map {
+//	($  update { case .muleVersion! if( $.domain == vars.cloudhubAPI.domain) -> payload.name})
+//}
+
+
+
+
+//	vars.allAPIS[indexForEach] mergeWith patchName	
+//vars.AllAPIS[0] update {
+//	case .ragnarok! -> "Odin"}
+	
+	/*
+	 * %dw 2.0
+import mergeWith from dw::core::Objects
+output application/json
+var users = [
+   {
+      "ownerId":"0",
+      "runtime" : {
+          "version" : "123",
+          "runtime" : "4.3"
+      },
+      "name":"DataWeave"
+   },
+   {
+      "ownerId":"1",
+            "runtime" : {
+          "version" : "345",
+          "runtime" : "4.1"
+      },
+      "name":"BAT"
+   },
+   {
+      "ownerId":"2",
+            "runtime" : {
+          "version" : "567",
+          "runtime" : "4.4"
+      },
+      "name":"DataSense"
+   }
+]
+---
+users map ((user) ->
+    user update {
+        case runtime at .runtime.version if( user["ownerId"] == (1 ++ "")) -> "Zeus"
+    }
+)
+//$  update { case .ownerId! if($$==1) -> "pangel"}),
+	 */
+
+]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+		</foreach>
+		<ee:transform doc:name="Transform Message" doc:id="239f773f-78d1-4846-950e-b6b6ed14bb81" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+vars.allAPIs]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform doc:name="Return Aggregated var allAPIs" doc:id="a62b463c-a68a-43d4-9be5-5215ab44b5e2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/csv quoteValues = true
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	versionId: payload01.versionId,
+	domain: payload01.domain,
+	fullDomain: payload01.fullDomain,
+	"properties.anypoint.platform.config.analytics.agent.enabled": payload01.properties."anypoint.platform.config.analytics.agent.enabled",
+	status: payload01.status,
+	"workers.type.weight": payload01.workers['type'].weight,
+	"workers.type.cpu": payload01.workers['type'].cpu,
+	"workers.type.memory": payload01.workers['type'].memory,
+	"workers.amount": payload01.workers.amount,
+	"workers.remainingOrgWorkers": payload01.workers.remainingOrgWorkers,
+	"workers.totalOrgWorkers": payload01.workers.totalOrgWorkers,
+	lastUpdateTime: payload01.lastUpdateTime,
+	fileName: payload01.fileName,
+	"muleVersion.version": payload01.muleVersion.version,
+	"muleVersion.updateId": payload01.muleVersion.updateId,
+	"muleVersion.latestUpdateId": payload01.muleVersion.latestUpdateId,
+	"muleVersion.endOfSupportDate": payload01.muleVersion.endOfSupportDate,
+	"previousMuleVersion.version": payload01.previousMuleVersion.version,
+	"previousMuleVersion.updateId": payload01.previousMuleVersion.updateId,
+	"previousMuleVersion.endOfSupportDate": payload01.previousMuleVersion.endOfSupportDate,
+	region: payload01.region,
+	persistentQueues: payload01.persistentQueues,
+	persistentQueuesEncryptionEnabled: payload01.persistentQueuesEncryptionEnabled,
+	persistentQueuesEncrypted: payload01.persistentQueuesEncrypted,
+	monitoringEnabled: payload01.monitoringEnabled,
+	monitoringAutoRestart: payload01.monitoringAutoRestart,
+	staticIPsEnabled: payload01.staticIPsEnabled,
+	hasFile: payload01.hasFile,
+	secureDataGatewayEnabled: payload01.secureDataGatewayEnabled,
+	loggingNgEnabled: payload01.loggingNgEnabled,
+	loggingCustomLog4JEnabled: payload01.loggingCustomLog4JEnabled,
+	cloudObjectStoreRegion: payload01.cloudObjectStoreRegion,
+	insightsReplayDataRegion: payload01.insightsReplayDataRegion,
+	isDeploymentWaiting: payload01.isDeploymentWaiting,
+	"deploymentGroup.id": payload01.deploymentGroup.id,
+	"deploymentGroup.name": payload01.deploymentGroup.name,
+	updateRuntimeConfig: payload01.updateRuntimeConfig
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

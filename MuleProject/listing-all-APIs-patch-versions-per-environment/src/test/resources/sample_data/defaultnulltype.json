@@ -1,0 +1,189 @@
+[
+  {
+    "versionId": "60dc3553c632ee268f62e79a",
+    "domain": "basic-ch-api-hello-world",
+    "fullDomain": "basic-ch-api-hello-world.uk-e1.cloudhub.io",
+    "properties": {
+      "anypoint.platform.config.analytics.agent.enabled": "false"
+    },
+    "propertiesOptions": {
+      
+    },
+    "status": "STARTED",
+    "workers": {
+      "type": {
+        "name": "Micro",
+        "weight": 0.1,
+        "cpu": "0.1 vCores",
+        "memory": "500 MB memory"
+      },
+      "amount": 1,
+      "remainingOrgWorkers": 0.2,
+      "totalOrgWorkers": 0.6
+    },
+    "lastUpdateTime": 1644006217058,
+    "fileName": "basic-ch-api-hello-world-1.0.0-SNAPSHOT-mule-application.jar",
+    "muleVersion": {
+      "version": "4.4.0/01-04-2022",
+      "updateId": "61d3db0536b6517e4ffcf614",
+      "latestUpdateId": "61fda0ee6bf97f08c583e798",
+      "endOfSupportDate": 1662595200000
+    },
+    "previousMuleVersion": {
+      "version": "4.3.0",
+      "updateId": "61d3dcca30ec354c29c539a7",
+      "endOfSupportDate": 1678233600000
+    },
+    "region": "eu-west-2",
+    "persistentQueues": false,
+    "persistentQueuesEncryptionEnabled": true,
+    "persistentQueuesEncrypted": false,
+    "monitoringEnabled": true,
+    "monitoringAutoRestart": true,
+    "staticIPsEnabled": false,
+    "hasFile": true,
+    "secureDataGatewayEnabled": false,
+    "loggingNgEnabled": true,
+    "loggingCustomLog4JEnabled": false,
+    "cloudObjectStoreRegion": "eu-west-2",
+    "insightsReplayDataRegion": "eu-west-2",
+    "isDeploymentWaiting": false,
+    "deploymentGroup": {
+      "id": "5ac685b0de9e5022ac80274e",
+      "name": "EU (London)"
+    },
+    "updateRuntimeConfig": false,
+    "trackingSettings": {
+      "trackingLevel": "DISABLED"
+    },
+    "logLevels": [
+      
+    ],
+    "ipAddresses": [
+      
+    ]
+  },
+  {
+    "versionId": "60dc3f1e545aad56225c5ac3",
+    "domain": "basic-ch-api-hello-world-https",
+    "fullDomain": "basic-ch-api-hello-world-https.uk-e1.cloudhub.io",
+    "properties": {
+      "anypoint.platform.config.analytics.agent.enabled": "false"
+    },
+    "propertiesOptions": {
+      
+    },
+    "status": "STARTED",
+    "workers": {
+      "type": {
+        "name": "Micro",
+        "weight": 0.1,
+        "cpu": "0.1 vCores",
+        "memory": "500 MB memory"
+      },
+      "amount": 1,
+      "remainingOrgWorkers": 0.2,
+      "totalOrgWorkers": 0.6
+    },
+    "lastUpdateTime": 1641999023734,
+    "fileName": "basic-ch-api-hello-world-1.0.0-SNAPSHOT-mule-application.jar",
+    "muleVersion": {
+      "version": "4.3.0/01-04-2022",
+      "updateId": "61d3dcca30ec354c29c539a7",
+      "latestUpdateId": "61fda1325a08be2bfb2e5ea5",
+      "endOfSupportDate": 1678233600000
+    },
+    "previousMuleVersion": {
+      "version": "4.3.0",
+      "updateId": "61bd26523ca92d3951f503cd",
+      "endOfSupportDate": 1678233600000
+    },
+    "region": "eu-west-2",
+    "persistentQueues": false,
+    "persistentQueuesEncryptionEnabled": true,
+    "persistentQueuesEncrypted": false,
+    "monitoringEnabled": true,
+    "monitoringAutoRestart": true,
+    "staticIPsEnabled": false,
+    "hasFile": true,
+    "secureDataGatewayEnabled": false,
+    "loggingNgEnabled": true,
+    "loggingCustomLog4JEnabled": false,
+    "cloudObjectStoreRegion": "eu-west-2",
+    "insightsReplayDataRegion": "eu-west-2",
+    "isDeploymentWaiting": false,
+    "deploymentGroup": {
+      "id": "5ac685b0de9e5022ac80274e",
+      "name": "EU (London)"
+    },
+    "updateRuntimeConfig": false,
+    "trackingSettings": {
+      "trackingLevel": "DISABLED"
+    },
+    "logLevels": [
+      
+    ],
+    "ipAddresses": [
+      
+    ]
+  },
+  {
+    "versionId": "61fd8199033bc65027e67a3f",
+    "domain": "basic-ch-hello-world-4-3-0-2022",
+    "fullDomain": "basic-ch-hello-world-4-3-0-2022.us-e2.cloudhub.io",
+    "properties": {
+      "anypoint.platform.config.analytics.agent.enabled": "false"
+    },
+    "propertiesOptions": {
+      
+    },
+    "status": "STARTED",
+    "workers": {
+      "type": {
+        "name": "Micro",
+        "weight": 0.1,
+        "cpu": "0.1 vCores",
+        "memory": "500 MB memory"
+      },
+      "amount": 1,
+      "remainingOrgWorkers": 0.2,
+      "totalOrgWorkers": 0.6
+    },
+    "lastUpdateTime": 1644003833203,
+    "fileName": "basic-ch-api-hello-world-1.0.0-SNAPSHOT-mule-application.jar",
+    "muleVersion": {
+      "version": "4.3.0/01-04-2022",
+      "updateId": "61d3dcca30ec354c29c539a7",
+      "latestUpdateId": "61fda1325a08be2bfb2e5ea5",
+      "endOfSupportDate": 1678233600000
+    },
+    "region": "us-east-2",
+    "persistentQueues": false,
+    "persistentQueuesEncryptionEnabled": true,
+    "persistentQueuesEncrypted": false,
+    "monitoringEnabled": true,
+    "monitoringAutoRestart": true,
+    "staticIPsEnabled": false,
+    "hasFile": true,
+    "secureDataGatewayEnabled": false,
+    "loggingNgEnabled": true,
+    "loggingCustomLog4JEnabled": false,
+    "cloudObjectStoreRegion": "us-east-2",
+    "insightsReplayDataRegion": "us-east-2",
+    "isDeploymentWaiting": false,
+    "deploymentGroup": {
+      "id": "5ac685b0de9e5022ac802745",
+      "name": "US East (Ohio)"
+    },
+    "updateRuntimeConfig": false,
+    "trackingSettings": {
+      "trackingLevel": "DISABLED"
+    },
+    "logLevels": [
+      
+    ],
+    "ipAddresses": [
+      
+    ]
+  }
+]

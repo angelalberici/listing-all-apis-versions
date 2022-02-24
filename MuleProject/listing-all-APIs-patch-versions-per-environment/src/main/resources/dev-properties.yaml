@@ -1,0 +1,15 @@
+anypoint:
+  grant_type:     "client_credentials"
+# You need to add your own ClientId/ClientSecret OR Usernname/Password 
+## ClientId/ClientSecret takes precedence, you can comment client_id and client_secret lines if you prefer to use Username/Password
+  client_id:      1111bd3a051e6411123e67b5ff1c1111 
+  client_secret:  1111a0644e1111127415E09D27C111
+  username:       "angel_alberici_123"
+  password:       "BlqoKqw11111k5O1115rFP1111"
+  
+# Instead of these properties use HTTP Headers in your Request for EnvironmentId and OrganizationID
+## If you uncomment you can use them as value properties
+# X-ANYPNT-ORG-ID:         "7e11118-f11e-400b-af02-941117a009" 
+# X-ANYPNT-ENV-ID: "4de7e819-7d15-411e-8fd6-e879b11113f" 
+
+ 

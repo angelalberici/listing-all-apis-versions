@@ -1,0 +1,35 @@
+{
+	"info": {
+		"_postman_id": "0331d75a-8721-4b3c-a155-f865d056f1cd",
+		"name": "listing-all-APIs-patch-versions-per-environment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get CSV with CloudhubAPI and Patch",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-ANYPNT-ORG-ID",
+						"value": "be2f7b60-7fd8-4124-aa19-0de239111111",
+						"type": "text"
+					},
+					{
+						"key": "X-ANYPNT-ENV-ID",
+						"value": "d8a12fe5-05e5-4c57-bd28-f9279881111",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081",
+					"host": [
+						"localhost"
+					],
+					"port": "8081"
+				}
+			},
+			"response": []
+		}
+	]
+}
