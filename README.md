@@ -4,8 +4,16 @@ This is not a MuleSoft Product. MuleSoft does not have any responsability over y
 # Why use it? 
 Use Case: As a Customer concerned about updating Cloudhub Patches every month I want to get a list of all CloudhubAPIs MRT version with their (Major.Minor.Patch, including Patch Date) in a Dashboard so that I can make decisions and understand if we are GOOD to go, even before the Mandatory Patches are "automatically applied"
 
-# FIVE (5) Minutes Video 
-<------->
+# [FIVE (5) Minutes Video](https://www.youtube.com/watch?v=C7ULhoKCdSo)
+Topics from the recording: 
+1. Mule Runtime Version with Patch Date
+2. Cloudhub monthly Patching recap
+3. Runtime Manager - List all Applications pending for updates
+4. Runtime Manager - Patch date in an Application 
+5. PlatformAPIs - Getting the date from a PatchID
+6. Using Postman PlatformAPIs to get the date from a PatchID
+7. Displaying Mule Version with Patch Date in a Dashboard (Open Source tool)
+
 
 # What is it? listing-all-apis-versions
 Three componentes: 
