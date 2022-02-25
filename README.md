@@ -1,5 +1,5 @@
 # Disclaimer 
-This is not a MuleSoft Product. MuleSoft does not have any responsability over your usage and there is no Support available around it. It's an utility application that helps displaying your Patched dates for applications.
+This is not a MuleSoft Product. MuleSoft does not have any responsability over your usage and there is no Support available around it. It's an utility application that helps displaying your Patched dates for applications. Content is my own and not the views of my employer. I am not representing MuleSoft in this content and be cautious
 
 # Why use it? 
 Use Case: As a Customer concerned about updating Cloudhub Patches every month I want to get a list of all CloudhubAPIs MRT version with their (Major.Minor.Patch, including Patch Date) in a Dashboard so that I can make decisions and understand if we are GOOD to go, even before the Mandatory Patches are "automatically applied"
