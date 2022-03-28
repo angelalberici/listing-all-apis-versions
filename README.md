@@ -41,3 +41,8 @@ Three componentes:
 ![](img/PlatformAPIsListCloudhubAPIs.png?raw=true)
 
 3. Ideally, when Patch Update is available, you will immediately apply it and run any automated regression tests, without waiting until Mandatory Patch. Realistically, you prefer to plan it, applying it to most important APIs and testing before the automatic update thus having some time in the unlikely scenario there was a bug
+
+# Resources: 
+1. Support Article on how to get the Version with Patch Date: https://help.mulesoft.com/s/article/How-to-get-exact-CloudHub-release-version-of-a-CloudHub-deployed-Application 
+2. How to Perform a Bulk CloudHub Application Update to the Latest Runtime Releases: https://help.mulesoft.com/s/article/How-to-Perform-a-Bulk-CloudHub-Application-Update-to-the-Latest-Runtime-Releases
+
